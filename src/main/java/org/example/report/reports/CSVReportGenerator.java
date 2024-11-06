@@ -23,5 +23,10 @@ public class CSVReportGenerator implements ReportGenerator {
                         .collect(Collectors.joining(";", "", "\r\n")))
                 .collect(Collectors.joining() );
     }
+
+    @Override
+    public ReportType getReportType() {
+        return ReportType.CSV;
+    }
 }
 

@@ -21,4 +21,9 @@ public class XMLReportGenerator implements ReportGenerator {
                 ).collect(Collectors.joining("", "<customer>\r\n", "<customer/>\r\n")) +
                 " <customers/>";
     }
+
+    @Override
+    public ReportType getReportType() {
+        return ReportType.XML;
+    }
 }

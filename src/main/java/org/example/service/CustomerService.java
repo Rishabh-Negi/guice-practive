@@ -5,20 +5,21 @@ import com.google.inject.name.Named;
 import org.example.ThirdPartyEmailAPIClient;
 import org.example.report.CSVReportImpl;
 import org.example.report.ReportGenerator;
+import org.example.report.ReportGeneratorFactory;
 
 public class CustomerService {
 
-    private ReportGenerator reportGenerator;
+    private ReportGeneratorFactory reportGeneratorFactory;
     private ThirdPartyEmailAPIClient apiClient;
     // Provider injection to build instance when needed
     private RetryQueueClientProvider retryQueueClientProvider;
 
     @Inject
-    public CustomerService( @CSVReportImpl ReportGenerator csvReportGenerator,
+    public CustomerService( ReportGeneratorFactory reportGeneratorFactory,
                             ThirdPartyEmailAPIClient apiClient,
                             RetryQueueClientProvider retryQueueClientProvider )
     {
-        this.reportGenerator = csvReportGenerator;
+        this.reportGeneratorFactory = reportGeneratorFactory;
         this.apiClient = apiClient;
         this.retryQueueClientProvider = retryQueueClientProvider;
     }
@@ -26,7 +27,7 @@ public class CustomerService {
     public void generate()
     {
         System.out.println("apiClient = " + apiClient);
-        String report = reportGenerator.generateReport();
+        String report = reportGeneratorFactory.getReportGenerator(ReportGenerator.ReportType.CSV).generateReport();
         System.out.println("report = " + report);
         try {
 //               if (1 == 1) {
